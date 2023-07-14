@@ -13,6 +13,10 @@ return new class extends Migration
     {
         Schema::create('ideas', function (Blueprint $table) {
             $table->id();
+            $table->string('title');
+            $table->string('slug');
+            $table->string('description')->nullable();
+            $table->decimal('rating', 2, 1)->default(0);
             $table->timestamps();
         });
     }
