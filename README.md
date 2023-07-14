@@ -1,4 +1,4 @@
-# idea-forum-project-g30
+# idea-forum-project-kuwona
 This repository contains the php capstone project built with React, Redux, TailwindCSS for the front-end and Laravel for the back-end api
 
 ## Project Description
