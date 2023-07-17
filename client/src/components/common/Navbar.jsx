@@ -13,7 +13,7 @@ function Navbar(){
                         to="/"
                         aria-label="Brand"
                     >
-                        ideaForum
+                        Kuwona
                     </Link>
                     <div className="sm:hidden">
                         <button

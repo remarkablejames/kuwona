@@ -4,7 +4,7 @@ import Navbar from "./common/Navbar.jsx";
 function Layout(){
     return (
         <>
-            <div className="min-h-full">
+            <div className="min-h-full bg-slate-100">
 
                 <Navbar />
                 <main>
