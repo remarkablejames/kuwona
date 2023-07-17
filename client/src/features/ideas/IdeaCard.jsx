@@ -1,7 +1,8 @@
 function IdeaCard(){
+
     return (
         <div className="mx-auto max-w-4xl pt-2 sm:px-6 lg:px-8 flex items-center justify-center">
-        <div className="rounded-xl border p-5 shadow-md w-full bg-white">
+        <div className="rounded-xl border p-5  shadow-md w-full bg-white">
             <div className="flex w-full items-center justify-between border-b pb-3">
                 <div className="flex items-center space-x-3">
                     <div className="h-8 w-8 rounded-full bg-slate-400 bg-[url('https://i.pravatar.cc/32')]" />
@@ -18,7 +19,7 @@ function IdeaCard(){
                 <div className="mb-3 text-xl font-bold">
                     Quantum Chef: A Culinary Adventure in Parallel Flavors
                 </div>
-                <div className="text-sm text-neutral-600">
+                <div className="text-sm text-neutral-600 text-justify">
                     Step into a futuristic kitchen where quantum computing meets gastronomy. Quantum Chef whisks you away on a taste-bud tingling journey, where ingredients exist in superposition and flavors entangle. Experience multi-dimensional meals, taste parallel dishes simultaneously, and savor the delights of quantum entangled cuisine. Bon appétit! 🍽️🚀
                 </div>
             </div>
@@ -48,6 +49,7 @@ function IdeaCard(){
                     </div>
                 </div>
             </div>
+
         </div>
         </div>
     )
