@@ -1,5 +1,5 @@
 import IdeaList from "../features/ideas/IdeaList.jsx";
-import {Link} from "react-router-dom";
+import {Link, Outlet} from "react-router-dom";
 
 function Home() {
   return (
@@ -13,7 +13,7 @@ function Home() {
                   <div className="mr-5 lg:mr-0 lg:hidden">
                       <a
                           className="flex-none text-xl font-semibold dark:text-white"
-                          href="#"
+                          href="/feed"
                           aria-label="Kuwona"
                       >
                           Kuwona
@@ -55,8 +55,8 @@ function Home() {
                                   </svg>
                               </div>
                               <input
-                                  name="email"
-                                  type="email"
+                                  name="icon"
+                                  type="text"
                                   className="block w-full px-4 py-2 pl-11 text-sm font-medium text-gray-800 placeholder-gray-400 bg-white border border-gray-300 rounded-full font-spline focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-600/50 disabled:opacity-50"
                                   placeholder="Search ideas..."
                                   required=""
@@ -263,7 +263,7 @@ function Home() {
               <div className="px-6">
                   <Link
                       className="flex-none text-xl font-bold dark:text-white"
-                      to="/"
+                      to="/feed"
                       aria-label="Kuwona"
                   >
                       Kuwona
@@ -275,9 +275,9 @@ function Home() {
               >
                   <ul className="space-y-1.5">
                       <li>
-                          <a
+                          <Link
                               className="flex items-center gap-x-3.5 py-2 px-2.5 bg-gray-100 text-sm text-slate-700 rounded-md hover:bg-gray-100 dark:bg-gray-900 dark:text-white"
-                              href="javascript:;"
+                              to="/feed"
                           >
                               <svg
                                   className="w-3.5 h-3.5"
@@ -297,12 +297,12 @@ function Home() {
                                   />
                               </svg>
                               Home
-                          </a>
+                          </Link>
                       </li>
                       <li className="hs-accordion" id="users-accordion">
                           <a
                               className="hs-accordion-toggle flex items-center gap-x-3.5 py-2 px-2.5 hs-accordion-active:text-blue-600 hs-accordion-active:hover:bg-transparent text-sm text-slate-700 rounded-md hover:bg-gray-100 dark:bg-gray-800 dark:hover:bg-gray-900 dark:text-slate-400 dark:hover:text-slate-300 dark:hs-accordion-active:text-white"
-                              href="javascript:;"
+                              href="/gdhdjf"
                           >
                               <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-4 h-4">
                                   <path strokeLinecap="round" strokeLinejoin="round" d="M20.25 8.511c.884.284 1.5 1.128 1.5 2.097v4.286c0 1.136-.847 2.1-1.98 2.193-.34.027-.68.052-1.02.072v3.091l-3-3c-1.354 0-2.694-.055-4.02-.163a2.115 2.115 0 01-.825-.242m9.345-8.334a2.126 2.126 0 00-.476-.095 48.64 48.64 0 00-8.048 0c-1.131.094-1.976 1.057-1.976 2.192v4.286c0 .837.46 1.58 1.155 1.951m9.345-8.334V6.637c0-1.621-1.152-3.026-2.76-3.235A48.455 48.455 0 0011.25 3c-2.115 0-4.198.137-6.24.402-1.608.209-2.76 1.614-2.76 3.235v6.226c0 1.621 1.152 3.026 2.76 3.235.577.075 1.157.14 1.74.194V21l4.155-4.155" />
@@ -351,7 +351,7 @@ function Home() {
                                   <li className="hs-accordion" id="users-accordion-sub-1">
                                       <a
                                           className="hs-accordion-toggle flex items-center gap-x-3.5 py-2 px-2.5 hs-accordion-active:text-blue-600 hs-accordion-active:hover:bg-transparent text-sm text-slate-700 rounded-md hover:bg-gray-100 dark:bg-gray-800 dark:hover:bg-gray-900 dark:text-slate-400 dark:hover:text-slate-300 dark:hs-accordion-active:text-white"
-                                          href="javascript:;"
+                                          href="/gdhdjf"
                                       >
                                           Sub Menu 1
                                           <svg
@@ -393,7 +393,7 @@ function Home() {
                                               <li>
                                                   <a
                                                       className="flex items-center gap-x-3.5 py-2 px-2.5 text-sm text-slate-700 rounded-md hover:bg-gray-100 dark:bg-gray-800 dark:text-slate-400 dark:hover:text-slate-300"
-                                                      href="javascript:;"
+                                                      href="/gdhdjf"
                                                   >
                                                       Link 1
                                                   </a>
@@ -401,7 +401,7 @@ function Home() {
                                               <li>
                                                   <a
                                                       className="flex items-center gap-x-3.5 py-2 px-2.5 text-sm text-slate-700 rounded-md hover:bg-gray-100 dark:bg-gray-800 dark:text-slate-400 dark:hover:text-slate-300"
-                                                      href="javascript:;"
+                                                      href="/gdhdjf"
                                                   >
                                                       Link 2
                                                   </a>
@@ -409,7 +409,7 @@ function Home() {
                                               <li>
                                                   <a
                                                       className="flex items-center gap-x-3.5 py-2 px-2.5 text-sm text-slate-700 rounded-md hover:bg-gray-100 dark:bg-gray-800 dark:text-slate-400 dark:hover:text-slate-300"
-                                                      href="javascript:;"
+                                                      href="/gdhdjf"
                                                   >
                                                       Link 3
                                                   </a>
@@ -420,7 +420,7 @@ function Home() {
                                   <li className="hs-accordion" id="users-accordion-sub-2">
                                       <a
                                           className="hs-accordion-toggle flex items-center gap-x-3.5 py-2 px-2.5 hs-accordion-active:text-blue-600 hs-accordion-active:hover:bg-transparent text-sm text-slate-700 rounded-md hover:bg-gray-100 dark:bg-gray-800 dark:hover:bg-gray-900 dark:text-slate-400 dark:hover:text-slate-300 dark:hs-accordion-active:text-white"
-                                          href="javascript:;"
+                                          href="/gdhdjf"
                                       >
                                           Sub Menu 2
                                           <svg
@@ -462,7 +462,7 @@ function Home() {
                                               <li>
                                                   <a
                                                       className="flex items-center gap-x-3.5 py-2 px-2.5 text-sm text-slate-700 rounded-md hover:bg-gray-100 dark:bg-gray-800 dark:text-slate-400 dark:hover:text-slate-300"
-                                                      href="javascript:;"
+                                                      href="/gdhdjf"
                                                   >
                                                       Link 1
                                                   </a>
@@ -470,7 +470,7 @@ function Home() {
                                               <li>
                                                   <a
                                                       className="flex items-center gap-x-3.5 py-2 px-2.5 text-sm text-slate-700 rounded-md hover:bg-gray-100 dark:bg-gray-800 dark:text-slate-400 dark:hover:text-slate-300"
-                                                      href="javascript:;"
+                                                      href="/gdhdjf"
                                                   >
                                                       Link 2
                                                   </a>
@@ -478,7 +478,7 @@ function Home() {
                                               <li>
                                                   <a
                                                       className="flex items-center gap-x-3.5 py-2 px-2.5 text-sm text-slate-700 rounded-md hover:bg-gray-100 dark:bg-gray-800 dark:text-slate-400 dark:hover:text-slate-300"
-                                                      href="javascript:;"
+                                                      href="/gdhdjf"
                                                   >
                                                       Link 3
                                                   </a>
@@ -492,7 +492,7 @@ function Home() {
                       <li className="hs-accordion" id="account-accordion">
                           <a
                               className="hs-accordion-toggle flex items-center gap-x-3.5 py-2 px-2.5 hs-accordion-active:text-blue-600 hs-accordion-active:hover:bg-transparent text-sm text-slate-700 rounded-md hover:bg-gray-100 dark:bg-gray-800 dark:hover:bg-gray-900 dark:text-slate-400 dark:hover:text-slate-300 dark:hs-accordion-active:text-white"
-                              href="javascript:;"
+                              href="/gdhdjf"
                           >
                               <svg
                                   className="w-3.5 h-3.5"
@@ -548,7 +548,7 @@ function Home() {
                                   <li>
                                       <a
                                           className="flex items-center gap-x-3.5 py-2 px-2.5 text-sm text-slate-700 rounded-md hover:bg-gray-100 dark:bg-gray-800 dark:text-slate-400 dark:hover:text-slate-300"
-                                          href="javascript:;"
+                                          href="/gdhdjf"
                                       >
                                           Link 1
                                       </a>
@@ -556,7 +556,7 @@ function Home() {
                                   <li>
                                       <a
                                           className="flex items-center gap-x-3.5 py-2 px-2.5 text-sm text-slate-700 rounded-md hover:bg-gray-100 dark:bg-gray-800 dark:text-slate-400 dark:hover:text-slate-300"
-                                          href="javascript:;"
+                                          href="/gdhdjf"
                                       >
                                           Link 2
                                       </a>
@@ -564,7 +564,7 @@ function Home() {
                                   <li>
                                       <a
                                           className="flex items-center gap-x-3.5 py-2 px-2.5 text-sm text-slate-700 rounded-md hover:bg-gray-100 dark:bg-gray-800 dark:text-slate-400 dark:hover:text-slate-300"
-                                          href="javascript:;"
+                                          href="/gdhdjf"
                                       >
                                           Link 3
                                       </a>
@@ -575,7 +575,7 @@ function Home() {
                       <li>
                           <a
                               className="flex items-center gap-x-3.5 py-2 px-2.5 text-sm text-slate-700 rounded-md hover:bg-gray-100 dark:hover:bg-gray-900 dark:text-slate-400 dark:hover:text-slate-300"
-                              href="javascript:;"
+                              href="/gdhdjf"
                           >
                               <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-4 h-4">
                                   <path strokeLinecap="round" strokeLinejoin="round" d="M17.593 3.322c1.1.128 1.907 1.077 1.907 2.185V21L12 17.25 4.5 21V5.507c0-1.108.806-2.057 1.907-2.185a48.507 48.507 0 0111.186 0z" />
@@ -591,7 +591,7 @@ function Home() {
           {/* Content */}
           <div className="w-full pt-10 px-4 sm:px-6 md:px-8 lg:pl-72">
 
-              <IdeaList />
+              <Outlet />
           </div>
           {/* End Content */}
           {/* ========== END MAIN CONTENT ========== */}
