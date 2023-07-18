@@ -6,7 +6,7 @@ function Layout(){
         <>
             <div className="min-h-full bg-slate-100">
 
-                <Navbar />
+                {/*<Navbar />*/}
                 <main>
                     <div className="w-full">
                         <Outlet />
