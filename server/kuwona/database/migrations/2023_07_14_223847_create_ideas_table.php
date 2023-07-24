@@ -13,10 +13,13 @@ return new class extends Migration
     {
         Schema::create('ideas', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('user_id');
             $table->string('title');
             $table->string('slug');
             $table->string('description')->nullable();
-            $table->decimal('rating', 2, 1)->default(0);
+            $table->string('status')->default('open')->nullable();
+            $table->integer('likes')->nullable();
+            $table->integer('views')->nullable();
             $table->timestamps();
         });
     }

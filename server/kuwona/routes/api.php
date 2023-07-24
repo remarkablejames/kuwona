@@ -29,3 +29,5 @@ Route::put('/ideas/{id}', [IdeaController::class, 'update']);
 
 Route::delete('/ideas/{id}', [IdeaController::class, 'destroy']);
 
+Route::get('/ideas/search/{title}', [IdeaController::class, 'search']);
+
