@@ -13,6 +13,14 @@ return new class extends Migration
     {
         Schema::create('ideas', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('user_id');
+            $table->string('title');
+            $table->string('slug');
+            $table->string('category')-> default('general');
+            $table->string('description')->nullable();
+            $table->integer('likes')->nullable();
+            $table->integer('dislikes')->nullable();
+
             $table->timestamps();
         });
     }
