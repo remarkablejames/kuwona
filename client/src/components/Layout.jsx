@@ -4,11 +4,11 @@ import Navbar from "./common/Navbar.jsx";
 function Layout(){
     return (
         <>
-            <div className="min-h-full">
+            <div className="min-h-full bg-slate-100">
 
                 <Navbar />
                 <main>
-                    <div className="mx-auto max-w-7xl py-6 sm:px-6 lg:px-2">
+                    <div className="w-full">
                         <Outlet />
                     </div>
                 </main>

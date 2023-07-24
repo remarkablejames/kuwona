@@ -20,6 +20,7 @@ return new class extends Migration
             $table->string('description')->nullable();
             $table->integer('likes')->nullable();
             $table->integer('dislikes')->nullable();
+
             $table->timestamps();
         });
     }

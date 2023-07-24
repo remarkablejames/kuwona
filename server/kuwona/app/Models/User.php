@@ -26,6 +26,7 @@ class User extends Authenticatable
         return $this->hasMany(Idea::class);
     }
 
+
     /**
      * The attributes that should be hidden for serialization.
      *
