@@ -12,15 +12,9 @@ class CommentController extends Controller
      */
     public function index()
     {
-        //
-    }
+        $comments = Comment::with('user','idea')->get();
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
+        return response()->json($comments, 200);
     }
 
     /**
@@ -29,6 +23,7 @@ class CommentController extends Controller
     public function store(Request $request)
     {
         //
+        return Comment::create($request->all());
     }
 
     /**
@@ -44,7 +39,7 @@ class CommentController extends Controller
      */
     public function edit(Comment $comment)
     {
-        //
+        //7
     }
 
     /**

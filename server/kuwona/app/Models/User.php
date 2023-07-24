@@ -22,6 +22,9 @@ class User extends Authenticatable
         'email',
         'password',
     ];
+    public function idea(){
+        return $this->hasMany(Idea::class);
+    }
 
     /**
      * The attributes that should be hidden for serialization.

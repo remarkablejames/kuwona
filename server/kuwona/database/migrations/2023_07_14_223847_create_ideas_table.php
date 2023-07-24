@@ -16,10 +16,10 @@ return new class extends Migration
             $table->foreignId('user_id');
             $table->string('title');
             $table->string('slug');
+            $table->string('category')-> default('general');
             $table->string('description')->nullable();
-            $table->string('status')->default('open')->nullable();
             $table->integer('likes')->nullable();
-            $table->integer('views')->nullable();
+            $table->integer('dislikes')->nullable();
             $table->timestamps();
         });
     }

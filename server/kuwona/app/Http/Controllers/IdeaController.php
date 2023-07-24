@@ -10,7 +10,7 @@ class IdeaController extends Controller
 {
     public function index(): JsonResponse
     {
-        $ideas = Idea::all();
+        $ideas = Idea::with('user','comments')->get();
         return response()->json($ideas, 200);
     }
 
