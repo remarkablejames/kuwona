@@ -16,10 +16,10 @@
       "static/chunks/main-app.js",
       "static/chunks/app/feed/page.js"
     ],
-    "/comments/page": [
+    "/idea/[id]/page": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
-      "static/chunks/app/comments/page.js"
+      "static/chunks/app/idea/[id]/page.js"
     ]
   }
 }

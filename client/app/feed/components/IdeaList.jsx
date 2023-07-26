@@ -2,7 +2,7 @@ import IdeaCard from "./IdeaCard.jsx";
 import Link from "next/link";
 
 async function fetchIdeas() {
-  const res = await fetch("http://127.0.0.1:8001/api/ideas");
+  const res = await fetch("http://127.0.0.1:8002/api/ideas");
   const ideas = await res.json();
   return ideas;
 }
