@@ -27,6 +27,9 @@ Route::get('/ideas', [IdeaController::class, 'index']);
 Route::get('/ideas/{id}', [IdeaController::class, 'show']);
 Route::get('/ideas/search/{title}', [IdeaController::class, 'search']);
 Route::post('register', [AuthController::class, 'register']);
+Route::post('login', [AuthController::class, 'login']);
+// logout
+Route::post('logout', [AuthController::class, 'logout']);
 //authenticating routes
 Route::group(["middleware" => "auth:sanctum"], function(){
 Route::post('/ideas', [IdeaController::class, 'store']);
