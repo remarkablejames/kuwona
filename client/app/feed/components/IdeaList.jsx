@@ -1,5 +1,6 @@
 import IdeaCard from "./IdeaCard.jsx";
 import Link from "next/link";
+import { sortArrayByDate } from "@/app/utils.js";
 
 async function fetchIdeas() {
   const res = await fetch("http://127.0.0.1:8002/api/ideas", {
@@ -16,8 +17,7 @@ async function fetchIdeas() {
 }
 
 async function IdeaList() {
-  const ideas = await fetchIdeas();
-  console.log(ideas);
+  const ideas = sortArrayByDate(await fetchIdeas());
   return (
     <>
       {ideas ? (
@@ -26,7 +26,7 @@ async function IdeaList() {
             <h2 className="font-normal text-xl">Latest Posts</h2>
             <div className="flex items-center justify-end mb-4">
               <Link
-                className="cursor-pointer flex gap-2 items-center justify-between w-full px-6 py-2 text-center text-white duration-200 bg-black border-2 border-black rounded-full nline-flex hover:bg-transparent hover:border-black hover:text-black focus:outline-none lg:w-auto focus-visible:outline-black text-sm focus-visible:ring-black"
+                className="cursor-pointer flex gap-2 items-center justify-between w-full px-6 py-2 text-center text-white duration-200 bg-blue-500 border-2 border-blue-500 rounded-full nline-flex hover:bg-transparent hover:border-black hover:text-black focus:outline-none lg:w-auto focus-visible:outline-black text-sm focus-visible:ring-black"
                 href="/idea/new"
               >
                 <svg
@@ -42,7 +42,7 @@ async function IdeaList() {
                     clipRule="evenodd"
                   />
                 </svg>
-                <h2>Create Idea post</h2>
+                <h2 className="font-bold">Create Idea post</h2>
               </Link>
             </div>
           </div>

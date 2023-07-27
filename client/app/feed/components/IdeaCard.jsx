@@ -1,10 +1,12 @@
 import Link from "next/link";
-
+import { getTimeAgo } from "@/app/utils";
 function IdeaCard({ idea }) {
+  console.log("LIKESSS");
+  console.log(idea.created_at);
   return (
     <div className="mx-auto max-w-4xl pt-2 sm:px-6 lg:px-8 flex items-center justify-center">
       <div className="rounded-xl border p-5 hover:shadow-sm  duration-200  w-full bg-white hover:bg-gray-100 hover:border-gray-300 transition">
-        <div className="flex w-full items-center justify-between border-b pb-3">
+        <div className="flex w-full items-center justify-between border-b pb-3 ">
           <div className="flex items-center space-x-3">
             <div className="h-8 w-8 rounded-full bg-slate-400 bg-[url('https://i.pravatar.cc/32')]" />
             <div className="text-lg font-normal text-slate-700">
@@ -12,21 +14,21 @@ function IdeaCard({ idea }) {
             </div>
           </div>
           <div className="flex items-center space-x-8">
-            <button className="rounded-2xl border bg-neutral-100 px-3 py-1 text-xs font-semibold">
+            <button className="rounded-2xl border bg-neutral-200 px-3 py-1 text-xs font-semibold">
               {idea.category}
             </button>
             <div className="text-xs text-neutral-500">
-              {idea.created_at.slice(0, 10)}
+              {getTimeAgo(idea.created_at)}
             </div>
           </div>
         </div>
         <div className="mt-4 mb-6">
           <Link href={`/idea/${idea.id}`}>
-            <div className="mb-3 text-xl font-normal hover:underline">
+            <div className="mb-3 text-xl font-bold text-blue-600 hover:underline">
               {idea.title}
             </div>
           </Link>
-          <div className="text-sm text-neutral-600 text-justify">
+          <div className="text-md text-neutral-600 text-justify">
             {idea.description}
           </div>
         </div>

@@ -15,15 +15,15 @@ class IdeaController extends Controller
     }
 
     public function show($id): JsonResponse
-{
-    $idea = Idea::with('user', 'comments', 'comments.user')->find($id);
+    {
+        $idea = Idea::with('user', 'comments', 'comments.user')->find($id);
 
-    if (!$idea) {
-        return response()->json(['error' => 'Idea not found'], 404);
+        if (!$idea) {
+            return response()->json(['error' => 'Idea not found'], 404);
+        }
+
+        return response()->json($idea, 200);
     }
-
-    return response()->json($idea, 200);
-}
 
 
     // create a new idea
