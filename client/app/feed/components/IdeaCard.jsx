@@ -1,7 +1,6 @@
 import Link from "next/link";
 
 function IdeaCard({ idea }) {
-  console.log(idea.title);
   return (
     <div className="mx-auto max-w-4xl pt-2 sm:px-6 lg:px-8 flex items-center justify-center">
       <div className="rounded-xl border p-5 hover:shadow-sm  duration-200  w-full bg-white hover:bg-gray-100 hover:border-gray-300 transition">
@@ -22,7 +21,7 @@ function IdeaCard({ idea }) {
           </div>
         </div>
         <div className="mt-4 mb-6">
-          <Link href="/comments">
+          <Link href={`/idea/${idea.id}`}>
             <div className="mb-3 text-xl font-normal hover:underline">
               {idea.title}
             </div>
