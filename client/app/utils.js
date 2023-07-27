@@ -17,3 +17,18 @@ export function getTimeAgo(timestamp) {
     return days + (days === 1 ? " day ago" : " days ago");
   }
 }
+
+export function sortArrayByDate(array) {
+  if (!array || !Array.isArray(array)) {
+    throw new Error("The array is invalid or missing.");
+  }
+
+  // Sort the array by their creation date in descending order (newest first)
+  array.sort((a, b) => {
+    const dateA = new Date(a.created_at);
+    const dateB = new Date(b.created_at);
+    return dateB - dateA;
+  });
+
+  return array;
+}

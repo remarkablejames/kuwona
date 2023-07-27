@@ -3,11 +3,14 @@ import Link from "next/link";
 import { useState } from "react";
 import axios from "axios";
 import { getTimeAgo } from "@/app/utils";
+import { sortArrayByDate } from "@/app/utils";
 
 function DetailedIdeaCard({ idea }) {
+  //sort comments by date, newest first
+  idea.comments = sortArrayByDate(idea.comments);
+
   const [showCommentBox, setShowCommentBox] = useState(false);
   const [comment, setComment] = useState("");
-  console.log(showCommentBox);
   function toggleCommentBox() {
     setShowCommentBox(!showCommentBox);
   }
@@ -59,12 +62,14 @@ function DetailedIdeaCard({ idea }) {
             <button className="rounded-2xl border bg-neutral-100 px-3 py-1 text-xs font-semibold">
               Category
             </button>
-            <div className="text-xs text-neutral-500">{idea.createdAt}</div>
+            <div className="text-xs text-neutral-500">
+              {getTimeAgo(idea.created_at)}
+            </div>
           </div>
         </div>
         <div className="mt-4 mb-6">
-          <div className="mb-3 text-xl font-normal">{idea.title}</div>
-          <div className="text-sm text-neutral-600 text-justify">
+          <div className="mb-3 text-xl font-bold">{idea.title}</div>
+          <div className="text-md text-neutral-600 text-justify">
             {idea.description}
           </div>
         </div>
@@ -152,16 +157,22 @@ function DetailedIdeaCard({ idea }) {
               />
             </form>
             <h3 className="text-lg font-semibold mb-2">Comments</h3>
-            <div>
-              {idea.comments.map((comment) => (
-                <Comment
-                  key={comment.id}
-                  timestamp={getTimeAgo(comment.created_at)}
-                  avatarUrl="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1180&q=80"
-                  username={comment.user.name}
-                  content={comment.content}
-                />
-              ))}
+            <div className="bg-gray-200 p-4 rounded-md">
+              {idea.comments.length == 0 ? (
+                <p>This post has no comments yet</p>
+              ) : (
+                <>
+                  {idea.comments.map((comment) => (
+                    <Comment
+                      key={comment.id}
+                      timestamp={getTimeAgo(comment.created_at)}
+                      avatarUrl="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1180&q=80"
+                      username={comment.user.name}
+                      content={comment.content}
+                    />
+                  ))}
+                </>
+              )}
             </div>
           </div>
         </>
@@ -171,3 +182,19 @@ function DetailedIdeaCard({ idea }) {
 }
 
 export default DetailedIdeaCard;
+
+function RenderComments({ comments }) {
+  return (
+    <>
+      {comments.map((comment) => (
+        <Comment
+          key={comment.id}
+          timestamp={getTimeAgo(comment.created_at)}
+          avatarUrl="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1180&q=80"
+          username={comment.user.name}
+          content={comment.content}
+        />
+      ))}
+    </>
+  );
+}
