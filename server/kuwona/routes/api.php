@@ -29,13 +29,13 @@ Route::get('/ideas/search/{title}', [IdeaController::class, 'search']);
 Route::post('register', [AuthController::class, 'register']);
 Route::post('login', [AuthController::class, 'login']);
 // logout
-Route::post('logout', [AuthController::class, 'logout']);
 //authenticating routes
 Route::group(["middleware" => "auth:sanctum"], function(){
-Route::post('/ideas', [IdeaController::class, 'store']);
-Route::put('/ideas/{id}', [IdeaController::class, 'update']);
-Route::delete('/ideas/{id}', [IdeaController::class, 'destroy']);
-Route::resource('comment', CommentController::class);
+    Route::post('logout', [AuthController::class, 'logout']);
+    Route::post('/ideas', [IdeaController::class, 'store']);
+    Route::put('/ideas/{id}', [IdeaController::class, 'update']);
+    Route::delete('/ideas/{id}', [IdeaController::class, 'destroy']);
+    Route::resource('comment', CommentController::class);
 });
 
 
