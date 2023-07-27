@@ -1,20 +1,28 @@
+"use client";
 import Link from "next/link";
+import { useState } from "react";
+import axios from "axios";
+import { getTimeAgo } from "@/app/utils";
 
-async function fetchIOneIdea(id) {
-  const res = await fetch(`http://127.0.0.1:8002/api/ideas/${id}}`, {
-    method: "GET",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    cache: "no-cache",
-  });
-  const ideas = await res.json();
-  return ideas;
-}
+function DetailedIdeaCard({ idea }) {
+  const [showCommentBox, setShowCommentBox] = useState(false);
+  const [comment, setComment] = useState("");
+  console.log(showCommentBox);
+  function toggleCommentBox() {
+    setShowCommentBox(!showCommentBox);
+  }
+  function addComment(e) {
+    e.preventDefault();
+    axios.post(`http://127.0.0.1:8002/api/comment`, {
+      content: comment,
+      idea_id: idea.id,
+      user_id: 1,
+    });
 
-async function DetailedIdeaCard({ id }) {
-  const idea = await fetchIOneIdea(id);
-  const Comment = ({ avatarUrl, username, content }) => {
+    // refresh the page
+    window.location.reload();
+  }
+  const Comment = ({ avatarUrl, username, content, timestamp }) => {
     return (
       <>
         <div className="flex items-start mb-4">
@@ -25,7 +33,11 @@ async function DetailedIdeaCard({ id }) {
               className="w-10 h-10 rounded-full mr-4"
             />
             <div>
-              <h4 className="font-semibold">{username}</h4>
+              <div className="flex items-center">
+                <h4 className="font-semibold">{username}</h4>
+                <div className="text-xs text-gray-500 ml-2">{timestamp}</div>
+              </div>
+
               <p className="text-gray-800">{content}</p>
             </div>
           </div>
@@ -60,9 +72,9 @@ async function DetailedIdeaCard({ id }) {
           <div className="flex items-center justify-between text-slate-500">
             <div className="flex space-x-4 md:space-x-8">
               <div className="flex cursor-pointer items-center transition hover:text-slate-600 gap-2">
-                <Link
+                <div
                   className="cursor-pointer flex gap-2 items-center justify-between w-full px-4 py-2 text-center text-white duration-200 bg-black border-2 border-black rounded-full nline-flex hover:bg-transparent hover:border-black hover:text-black focus:outline-none lg:w-auto focus-visible:outline-black text-sm focus-visible:ring-black"
-                  href="/feed/newpost"
+                  onClick={toggleCommentBox}
                 >
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -79,7 +91,7 @@ async function DetailedIdeaCard({ id }) {
                     />
                   </svg>
                   <h2>Add comment</h2>
-                </Link>
+                </div>
               </div>
               <div className="flex cursor-pointer items-center transition hover:text-slate-600 gap-2">
                 <svg
@@ -122,17 +134,29 @@ async function DetailedIdeaCard({ id }) {
         {/*Comment component*/}
         <>
           <div className="bg-white pl-2 mt-4  w-full">
-            <form className="mb-4">
+            <form
+              className={`mb-4 ${showCommentBox ? "" : "hidden"}`}
+              onSubmit={addComment}
+            >
               <textarea
                 className="w-full rounded-md border p-2 mb-2 resize-none"
                 placeholder="Write your comment here..."
                 rows="3"
+                value={comment}
+                onChange={(e) => setComment(e.target.value)}
+              />
+              <input
+                className="cursor-pointer flex gap-2 items-center justify-between w-full px-4 py-2 text-center text-white duration-200 bg-blue-600 border-2 border-blue-600 rounded-full nline-flex hover:bg-transparent hover:border-black hover:text-black focus:outline-none lg:w-auto focus-visible:outline-black text-sm focus-visible:ring-black"
+                type="submit"
+                value="Post comment"
               />
             </form>
             <h3 className="text-lg font-semibold mb-2">Comments</h3>
             <div>
               {idea.comments.map((comment) => (
                 <Comment
+                  key={comment.id}
+                  timestamp={getTimeAgo(comment.created_at)}
                   avatarUrl="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1180&q=80"
                   username={comment.user.name}
                   content={comment.content}

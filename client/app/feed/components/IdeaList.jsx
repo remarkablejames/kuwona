@@ -17,7 +17,6 @@ async function fetchIdeas() {
 
 async function IdeaList() {
   const ideas = await fetchIdeas();
-  console.log("ideas:=============>");
   console.log(ideas);
   return (
     <>
@@ -28,7 +27,7 @@ async function IdeaList() {
             <div className="flex items-center justify-end mb-4">
               <Link
                 className="cursor-pointer flex gap-2 items-center justify-between w-full px-6 py-2 text-center text-white duration-200 bg-black border-2 border-black rounded-full nline-flex hover:bg-transparent hover:border-black hover:text-black focus:outline-none lg:w-auto focus-visible:outline-black text-sm focus-visible:ring-black"
-                href="/feed/newpost"
+                href="/idea/new"
               >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
