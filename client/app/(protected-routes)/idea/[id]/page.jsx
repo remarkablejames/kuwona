@@ -1,4 +1,4 @@
-import DetailedIdeaCard from "@/app/idea/[id]/components/CommentCard";
+import DetailedIdeaCard from "@/app/(protected-routes)/idea/[id]/components/CommentCard";
 import { getServerSession } from "next-auth/next";
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 
