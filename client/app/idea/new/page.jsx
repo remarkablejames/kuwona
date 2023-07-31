@@ -6,7 +6,7 @@ export default async function NewIdeaPage(props) {
   const session = await getServerSession(authOptions);
   return (
     <div className="new-idea-page">
-      <NewIdeaForm token={session.token} />
+      <NewIdeaForm token={session.token} user_id={session.user_id} />
     </div>
   );
 }

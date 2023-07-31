@@ -51,7 +51,7 @@ export const authOptions = {
     async session({ session, token, user }) {
       //   console.log("IN SESSION", session, token, user);
 
-      return { ...session, token: token.accessToken };
+      return { ...session, token: token.accessToken, user_id: token.id };
     },
   },
   pages: {

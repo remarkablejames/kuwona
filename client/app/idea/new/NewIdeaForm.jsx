@@ -1,7 +1,8 @@
 "use client";
 import { useState } from "react";
 import axios from "axios";
-export default function NewIdeaForm({ token }) {
+import { redirect } from "next/navigation";
+export default function NewIdeaForm({ token, user_id }) {
   console.log(token);
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
@@ -18,7 +19,7 @@ export default function NewIdeaForm({ token }) {
           title,
           description,
           category,
-          user_id: 1,
+          user_id,
           slug: "slug",
         },
         {
@@ -29,7 +30,9 @@ export default function NewIdeaForm({ token }) {
         }
       )
       .then((res) => {
-        console.log(res);
+        console.log("GOT RESPONSE", res);
+        // redirect to home page
+        window.location.href = "/feed";
       })
       .catch((err) => {
         console.log(err);

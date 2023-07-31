@@ -5,7 +5,7 @@ import axios from "axios";
 import { getTimeAgo } from "@/app/utils";
 import { sortArrayByDate } from "@/app/utils";
 
-function DetailedIdeaCard({ idea }) {
+function DetailedIdeaCard({ idea, token, user_id }) {
   //sort comments by date, newest first
   idea.comments = sortArrayByDate(idea.comments);
 
@@ -16,11 +16,20 @@ function DetailedIdeaCard({ idea }) {
   }
   function addComment(e) {
     e.preventDefault();
-    axios.post(`http://127.0.0.1:8002/api/comment`, {
-      content: comment,
-      idea_id: idea.id,
-      user_id: 1,
-    });
+    axios.post(
+      `http://127.0.0.1:8002/api/comment`,
+      {
+        content: comment,
+        idea_id: idea.id,
+        user_id,
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          Accept: "application/json",
+        },
+      }
+    );
 
     // refresh the page
     window.location.reload();
