@@ -4,6 +4,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\IdeaController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\BookmarkController;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -36,6 +37,7 @@ Route::group(["middleware" => "auth:sanctum"], function(){
     Route::put('/ideas/{id}', [IdeaController::class, 'update']);
     Route::delete('/ideas/{id}', [IdeaController::class, 'destroy']);
     Route::resource('comment', CommentController::class);
+    Route::resource('/bookmarks', BookmarkController::class);
 });
 
 

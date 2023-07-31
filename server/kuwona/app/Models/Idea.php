@@ -17,4 +17,9 @@ class Idea extends Model
     public function comments(){
         return $this->hasMany(Comment::class);
     }
+
+    public function bookmarks()
+    {
+        return $this->hasMany(Bookmark::class);
+    }
 }
