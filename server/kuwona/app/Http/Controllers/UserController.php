@@ -13,6 +13,7 @@ class UserController extends Controller
     public function index()
     {
         //
+        return User::all();
     }
 
     /**
@@ -20,8 +21,8 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        //
-        return User::create($request->all());
+        // return error saying that this route is not allowed
+        return response()->json(['message' => 'This route is not allowed'], 405);
     }
 
     /**
@@ -30,6 +31,7 @@ class UserController extends Controller
     public function show(string $id)
     {
         //
+        return User::find($id);
     }
 
     /**
@@ -37,7 +39,9 @@ class UserController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        // update the user
+        $user = User::find($id);
+        $user->update($request->only('name', 'email', 'password'));
     }
 
     /**

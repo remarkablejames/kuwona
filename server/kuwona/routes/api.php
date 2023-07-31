@@ -38,6 +38,7 @@ Route::group(["middleware" => "auth:sanctum"], function(){
     Route::delete('/ideas/{id}', [IdeaController::class, 'destroy']);
     Route::resource('comment', CommentController::class);
     Route::resource('/bookmarks', BookmarkController::class);
+    Route::resource('/users', UserController::class);
 });
 
 
