@@ -1,4 +1,13 @@
-export default function accountPage() {
+import { getServerSession } from "next-auth/next";
+import { authOptions } from "@/app/api/auth/[...nextauth]/route";
+import { redirect } from "next/dist/server/api-utils";
+
+export default async function accountPage() {
+  const session = await getServerSession(authOptions);
+  if (!session) {
+    return redirect("/auth/login");
+  }
+
   return (
     <>
       <div className="h-full">
@@ -16,7 +25,7 @@ export default function accountPage() {
               className="w-40 border-4 border-white rounded-full"
             />
             <div className="flex items-center space-x-2 mt-2">
-              <p className="text-2xl">Amanda Ross</p>
+              <p className="text-2xl">{session.user.name}</p>
               <span className="bg-blue-500 rounded-full p-1" title="Verified">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
