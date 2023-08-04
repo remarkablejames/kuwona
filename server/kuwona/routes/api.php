@@ -5,6 +5,7 @@ use App\Http\Controllers\CommentController;
 use App\Http\Controllers\IdeaController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\BookmarkController;
+use App\Http\Controllers\LikesAndDislikesController;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -37,6 +38,20 @@ Route::group(["middleware" => "auth:sanctum"], function(){
     Route::put('/ideas/{id}', [IdeaController::class, 'update']);
     Route::delete('/ideas/{id}', [IdeaController::class, 'destroy']);
     Route::resource('comment', CommentController::class);
+
+    Route::post('/ideas/{ideaId}/like', [LikesAndDislikesController::class, 'likeIdea'])->name('ideas.like');
+    Route::post('/ideas/{ideaId}/dislike', [LikesAndDislikesController::class, 'dislikeIdea'])->name('ideas.dislike');
+
+   //get all likes and dislikes
+    Route::get('/likes', [LikesAndDislikesController::class, 'index']);
+
+
+
+    //get all likes and dislikes for a specific idea
+    Route::get('/likes/{Id}', [LikesAndDislikesController::class, 'show']);
+
+    Route::put('/users/{id}', [UserController::class, 'update']);
+
     Route::resource('/bookmarks', BookmarkController::class);
     Route::resource('/users', UserController::class);
 });

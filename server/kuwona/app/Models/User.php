@@ -32,6 +32,15 @@ class User extends Authenticatable
         return $this->hasMany(Bookmark::class);
     }
 
+    public function likedIdeas()
+    {
+        return $this->belongsToMany(Idea::class, 'likes', 'user_id', 'idea_id');
+    }
+
+    public function dislikedIdeas()
+    {
+        return $this->belongsToMany(Idea::class, 'dislikes', 'user_id', 'idea_id');
+    }
 
     /**
      * The attributes that should be hidden for serialization.
