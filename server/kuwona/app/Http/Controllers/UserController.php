@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\User;
+use Illuminate\Support\Facades\Auth;
 
 class UserController extends Controller
 {
@@ -50,5 +51,25 @@ class UserController extends Controller
     public function destroy(string $id)
     {
         //
+    }
+
+    public function uploadProfilePicture(Request $request)
+    {
+        $request->validate([
+            'profile_picture' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048'
+        ]);
+
+        $user = Auth::user();
+
+        if($request->hasFile('profile_picture'))
+        {
+            $profilePicture = $request->file('profile_picture');
+            $profilePictureName = time().'.'.$profilePicture->getClientOriginalExtension();
+            $profilePicture->storeAs('public/profile_pictures', $profilePictureName);
+            $user->profile_picture = $profilePictureName;
+            $user->save();
+        }
+
+        return response()->json(['message' => 'Profile picture uploaded successfully'], 200);
     }
 }

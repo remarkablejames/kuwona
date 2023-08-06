@@ -33,6 +33,9 @@ Route::post('login', [AuthController::class, 'login']);
 // logout
 //authenticating routes
 Route::group(["middleware" => "auth:sanctum"], function(){
+
+    Route::post('/upload', [UserController::class, 'uploadProfilePicture']);
+
     Route::post('logout', [AuthController::class, 'logout']);
     Route::post('/ideas', [IdeaController::class, 'store']);
     Route::put('/ideas/{id}', [IdeaController::class, 'update']);
