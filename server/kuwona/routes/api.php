@@ -6,6 +6,7 @@ use App\Http\Controllers\IdeaController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\BookmarkController;
 use App\Http\Controllers\LikesAndDislikesController;
+use App\Http\Controllers\LikesController;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -42,13 +43,16 @@ Route::group(["middleware" => "auth:sanctum"], function(){
     Route::put('/ideas/{id}', [IdeaController::class, 'update']);
     Route::delete('/ideas/{id}', [IdeaController::class, 'destroy']);
     Route::resource('comment', CommentController::class);
+    // LIKES IMPLEMENTATION BY OBI
+//    Route::post('/ideas/{ideaId}/like', [LikesAndDislikesController::class, 'likeIdea'])->name('ideas.like');
+//    Route::post('/ideas/{ideaId}/dislike', [LikesAndDislikesController::class, 'dislikeIdea'])->name('ideas.dislike');
+//
+//   //get all likes and dislikes
+//    Route::get('/likes', [LikesAndDislikesController::class, 'index']);
+//
+    // LIKES IMPLEMENTATION
 
-    Route::post('/ideas/{ideaId}/like', [LikesAndDislikesController::class, 'likeIdea'])->name('ideas.like');
-    Route::post('/ideas/{ideaId}/dislike', [LikesAndDislikesController::class, 'dislikeIdea'])->name('ideas.dislike');
-
-   //get all likes and dislikes
-    Route::get('/likes', [LikesAndDislikesController::class, 'index']);
-
+    Route::resource('/likes', LikesController::class);
 
 
     //get all likes and dislikes for a specific idea
