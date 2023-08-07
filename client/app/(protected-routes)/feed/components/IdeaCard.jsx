@@ -1,6 +1,62 @@
+'use client';
 import Link from "next/link";
 import { getTimeAgo } from "@/app/utils";
-function IdeaCard({ idea }) {
+import {useState} from "react";
+import {redirect} from "next/navigation";
+
+async function createBookmark({idea,token,user_id}) {
+
+  const res = await fetch(`http://127.0.0.1:8002/api/bookmarks`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+      Accept: "application/json",
+    },
+    cache: "no-cache",
+    body: JSON.stringify({
+      idea_post_id: idea.id,
+      user_id,
+    }),
+  })
+}
+
+// delete bookmark with its id
+async function deleteBookmark({bookmarkId,token,}) {
+    const res = await fetch(`http://127.0.0.1:8002/api/bookmarks/${bookmarkId}`, {
+        method: "DELETE",
+        headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+            Accept: "application/json",
+        },
+        cache: "no-cache",
+    })
+}
+
+function IdeaCard(props) {
+  const { idea } = props;
+  const [bookmarked, setBookmarked] = useState(idea.bookmarked);
+
+  // if(idea.bookmarked) {
+  //   setBookmarked(true);
+  // }
+    const handleBookmark = async (props) => {
+      console.log("props:=============>", props);
+      const {idea,token,user_id} = props;
+      if(!props.token) {
+        return redirect('/unauthenticated')
+      }
+        if(bookmarked) {
+            setBookmarked(false);
+            await deleteBookmark({bookmarkId: idea.bookmark_id,token})
+        } else {
+            setBookmarked(true);
+            await createBookmark({idea,token,user_id})
+        }
+
+
+    }
   return (
     <div className="mx-auto max-w-4xl pt-2 sm:px-6 lg:px-8 flex items-center justify-center">
       <div className="rounded-xl border p-5 hover:shadow-sm  duration-200  w-full bg-white hover:bg-gray-100 hover:border-gray-300 transition">
@@ -90,18 +146,25 @@ function IdeaCard({ idea }) {
               <div className="flex cursor-pointer items-center transition hover:text-slate-600 gap-2">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
+                  fill={bookmarked ? "currentColor" : "none"}
                   viewBox="0 0 24 24"
                   strokeWidth={1.5}
                   stroke="currentColor"
                   className="w-6 h-6"
+                  onClick={() => handleBookmark(props)}
                 >
                   <path
                     strokeLinecap="round"
                     strokeLinejoin="round"
                     d="M17.593 3.322c1.1.128 1.907 1.077 1.907 2.185V21L12 17.25 4.5 21V5.507c0-1.108.806-2.057 1.907-2.185a48.507 48.507 0 0111.186 0z"
                   />
+
                 </svg>
+                <span>
+                    {
+                      bookmarked ? "Bookmarked" : ""
+                    }
+                  </span>
               </div>
             </div>
           </div>

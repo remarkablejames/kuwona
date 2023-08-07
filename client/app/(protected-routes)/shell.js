@@ -18,13 +18,13 @@ export default function LayoutShell({ children, user }) {
             aria-label="Global"
           >
             <div className="mr-5 md:mr-8">
-              <a
+              <Link
                 className="flex-none text-xl font-semibold text-white"
-                href="#"
+                href="/feed"
                 aria-label="Brand"
               >
                 Kuwona
-              </a>
+              </Link>
             </div>
             <div className="w-full flex items-center justify-end ml-auto sm:justify-between sm:gap-x-3 sm:order-3">
               <div className="sm:hidden">

@@ -60,6 +60,13 @@ class IdeaController extends Controller
         return response()->json(null, 204);
     }
 
+    // get all ideas by a user (id)
+    public function userIdeas($id): JsonResponse
+    {
+        $ideas = Idea::where('user_id', $id)->get();
+        return response()->json($ideas, 200);
+    }
+
     // search for an idea
     public function search($title): JsonResponse
     {

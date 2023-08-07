@@ -31,6 +31,15 @@ class BookmarkController extends Controller
         return response()->json(['message' => 'Bookmark created successfully', 'bookmark' => $bookmark]);
     }
 
+    // get all bookmarks for a user not populating the user but only idea_post
+    public function show($id)
+    {
+        $bookmarks = Bookmark::with('idea')->where('user_id', $id)->get();
+        return response()->json($bookmarks);
+    }
+
+
+
     public function update(Request $request, Bookmark $bookmark)
     {
         // Validate the incoming request data
