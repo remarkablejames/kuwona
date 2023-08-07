@@ -4,6 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
+
 return new class extends Migration
 {
     /**
@@ -17,6 +18,7 @@ return new class extends Migration
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
+            $table->string('profile_picture')->nullable();
             $table->rememberToken();
             $table->timestamps();
             // add a new field that contains  array of liked 

@@ -22,4 +22,5 @@ class Idea extends Model
     {
         return $this->hasMany(Bookmark::class);
     }
+
 }

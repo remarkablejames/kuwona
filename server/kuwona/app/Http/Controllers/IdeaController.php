@@ -72,4 +72,5 @@ class IdeaController extends Controller
     {
         return response()->json(Idea::where('title', 'like', '%'.$title.'%')->get(), 200);
     }
+
 }
