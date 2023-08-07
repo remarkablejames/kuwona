@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Likes;
 use App\Models\Dislikes;
+use App\Models\Idea;
 
 class LikesController extends Controller
 {
@@ -29,7 +30,7 @@ class LikesController extends Controller
         $request->validate([
             'user_id' => 'required|exists:users,id',
             'idea_post_id' => 'required|exists:ideas,id',
-            'action' => 'required|in:like,dislike'
+            'action' => 'required|in:like,dislike,deleteLike,deleteDislike'
         ]);
 
         // check if the user has already liked or disliked the idea post
@@ -39,14 +40,36 @@ class LikesController extends Controller
         // if idea is already liked and action is dislike, remove the like and add a dislike
         if ($like && $request->action === 'dislike') {
             $like->delete();
+            // update the idea post's likes and dislikes count
+            $idea = Idea::find($request->idea_post_id);
+            // if the idea post's likes count is 0, set it to 0
+            if ($idea->likes === 0) {
+                $idea->likes = 0;
+            } else {
+                $idea->likes -= 1;
+            }
+            $idea->save();
             $dislike = Dislikes::create($request->only('user_id', 'idea_post_id'));
+            $idea->dislikes += 1;
+            $idea->save();
             return response()->json(['message' => 'Dislike created successfully', 'dislike' => $dislike]);
         }
 
         // if idea is already disliked and action is like, remove the dislike and add a like
         if ($dislike && $request->action === 'like') {
             $dislike->delete();
+            // update the idea post's likes and dislikes count
+            $idea = Idea::find($request->idea_post_id);
+            // if the idea post's likes count is 0, set it to 0
+            if ($idea->dislikes === 0) {
+                $idea->dislikes = 0;
+            } else {
+                $idea->dislikes -= 1;
+            }
+            $idea->save();
             $like = Likes::create($request->only('user_id', 'idea_post_id'));
+            $idea->likes += 1;
+            $idea->save();
             return response()->json(['message' => 'Like created successfully', 'like' => $like]);
         }
 
@@ -64,13 +87,53 @@ class LikesController extends Controller
 
         if ($request->action === 'like') {
             $like = Likes::create($request->only('user_id', 'idea_post_id'));
+            // update the idea post's likes count
+            $idea = Idea::find($request->idea_post_id);
+            $idea->likes += 1;
+            $idea->save();
             return response()->json(['message' => 'Like created successfully', 'like' => $like]);
         }
 
         if ($request->action === 'dislike') {
             $dislike = Dislikes::create($request->only('user_id', 'idea_post_id'));
+            // update the idea post's dislikes count
+            $idea = Idea::find($request->idea_post_id);
+            $idea->dislikes += 1;
+            $idea->save();
             return response()->json(['message' => 'Dislike created successfully', 'dislike' => $dislike]);
         }
+
+        // if the action is "deleteLike" or "deleteDislike", delete the like or dislike
+        if ($request->action === 'deleteLike') {
+            $like = Likes::where('user_id', $request->user_id)->where('idea_post_id', $request->idea_post_id)->first();
+            $like->delete();
+            // update the idea post's likes count
+            $idea = Idea::find($request->idea_post_id);
+            // if the idea post's likes count is 0, set it to 0
+            if ($idea->likes === 0) {
+                $idea->likes = 0;
+            } else {
+                $idea->likes -= 1;
+            }
+            $idea->save();
+            return response()->json(['message' => 'Like deleted successfully']);
+        }
+
+        if ($request->action === 'deleteDislike') {
+            $dislike = Dislikes::where('user_id', $request->user_id)->where('idea_post_id', $request->idea_post_id)->first();
+            $dislike->delete();
+            // update the idea post's dislikes count
+            $idea = Idea::find($request->idea_post_id);
+            // if the idea post's likes count is 0, set it to 0
+            if ($idea->dislikes === 0) {
+                $idea->dislikes = 0;
+            } else {
+                $idea->dislikes -= 1;
+            }
+            $idea->save();
+            return response()->json(['message' => 'Dislike deleted successfully']);
+        }
+
     }
 
     /**

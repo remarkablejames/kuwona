@@ -34,12 +34,37 @@ async function fetchBookmarks({token, user_id}) {
   return bookmarks;
 }
 
+// Fetch liked and disliked ideas
+
+async function fetchLikesAndDislikes({token, user_id}) {
+  const res = await fetch(`http://127.0.0.1:8002/api/likes/${user_id}`, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+      Accept: "application/json",
+    },
+    cache: "no-cache",
+  });
+
+  const likesAndDislikes = await res.json();
+  //
+  return likesAndDislikes;
+}
+
+
+
 async function IdeaList() {
     const session = await getServerSession(authOptions);
   const ideas = sortArrayByDate(await fetchIdeas());
   let bookmarks = [];
+  let likesAndDislikes = [];
   if(session) {
     bookmarks = await fetchBookmarks({token: session.token, user_id: session.user_id});
+    likesAndDislikes = await fetchLikesAndDislikes({token: session.token, user_id: session.user_id});
+    const likes = likesAndDislikes.likes;
+    const dislikes = likesAndDislikes.dislikes;
+    console.log("likesAndDislikes:=============>", likesAndDislikes);
     ideas.map((idea) => {
       bookmarks.map((bookmark) => {
         if(idea.id == bookmark.idea.id) {
@@ -47,6 +72,18 @@ async function IdeaList() {
             idea.bookmark_id = bookmark.id;
         }
       })
+
+        likes.map((like) => {
+            if(idea.id == like.idea_post_id) {
+                idea.liked = true;
+            }
+        })
+
+        dislikes.map((dislike) => {
+            if(idea.id == dislike.idea_post_id) {
+                idea.disliked = true;
+            }
+        })
     })
   }
 

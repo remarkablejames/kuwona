@@ -34,13 +34,31 @@ async function deleteBookmark({bookmarkId,token,}) {
     })
 }
 
+// Like or dislike an idea
+async function likeOrDislikeIdea({user_id,idea_post_id,token,action}) {
+  const res = await fetch(`http://127.0.0.1:8002/api/likes`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+      Accept: "application/json",
+    },
+    body: JSON.stringify({
+        user_id,
+        idea_post_id,
+        action
+    }),
+    cache: "no-cache",
+  })
+}
+
 function IdeaCard(props) {
   const { idea } = props;
   const [bookmarked, setBookmarked] = useState(idea.bookmarked);
-
-  // if(idea.bookmarked) {
-  //   setBookmarked(true);
-  // }
+  const [liked, setLiked] = useState(idea.liked);
+    const [disliked, setDisliked] = useState(idea.disliked);
+    const [likes, setLikes] = useState(idea.likes);
+    const [dislikes, setDislikes] = useState(idea.dislikes);
     const handleBookmark = async (props) => {
       console.log("props:=============>", props);
       const {idea,token,user_id} = props;
@@ -56,6 +74,62 @@ function IdeaCard(props) {
         }
 
 
+    }
+
+    const handleLikeAndDislike = async (props) => {
+        const {idea,token,user_id,action} = props;
+        if(!props.token) {
+            return redirect('/unauthenticated')
+        }
+        // if action is like and user has already liked the idea, then unlike it by passing action as deleteLike
+        if(action == "like" && liked) {
+            setLiked(false);
+            // if likes is 0, then set it to 0, else decrement it by 1
+            setLikes(likes == 0 ? 0 : likes - 1);
+            await likeOrDislikeIdea({user_id,idea_post_id: idea.id,token,action: "deleteLike"})
+        }
+
+        // if action is dislike and user has already disliked the idea, then undislike it by passing action as deleteDislike
+        if(action == "dislike" && disliked) {
+            setDisliked(false);
+            // if dislikes is 0, then set it to 0, else decrement it by 1
+            setDislikes(dislikes == 0 ? 0 : dislikes - 1);
+            await likeOrDislikeIdea({user_id,idea_post_id: idea.id,token,action: "deleteDislike"})
+        }
+
+        // if action is like and user has not liked the idea, then like it by passing action as like
+        if(action == "like" && !liked) {
+            setLiked(true);
+            setLikes(likes + 1);
+            await likeOrDislikeIdea({user_id,idea_post_id: idea.id,token,action: "like"})
+        }
+
+        // if action is dislike and user has not disliked the idea, then dislike it by passing action as dislike
+        if(action == "dislike" && !disliked) {
+            setDisliked(true);
+            setDislikes(dislikes + 1);
+            await likeOrDislikeIdea({user_id,idea_post_id: idea.id,token,action: "dislike"})
+        }
+
+        // if action is like and user has already disliked the idea, then delete the dislike and like the idea by passing action as like
+        if(action == "like" && disliked) {
+            setLiked(true);
+            setDisliked(false);
+          // if dislikes is 0, then set it to 0, else decrement it by 1
+          setDislikes(dislikes == 0 ? 0 : dislikes - 1);
+            setLikes(likes + 1);
+            await likeOrDislikeIdea({user_id,idea_post_id: idea.id,token,action: "like"})
+        }
+
+        // if action is dislike and user has already liked the idea, then delete the like and dislike the idea by passing action as dislike
+        if(action == "dislike" && liked) {
+            setLiked(false);
+            setDisliked(true);
+            setDislikes(dislikes + 1);
+          // if likes is 0, then set it to 0, else decrement it by 1
+          setLikes(likes == 0 ? 0 : likes - 1);
+            await likeOrDislikeIdea({user_id,idea_post_id: idea.id,token,action: "dislike"})
+        }
     }
   return (
     <div className="mx-auto max-w-4xl pt-2 sm:px-6 lg:px-8 flex items-center justify-center">
@@ -110,11 +184,12 @@ function IdeaCard(props) {
               <div className="flex cursor-pointer items-center transition hover:text-slate-600 gap-2">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
+                  fill={liked ? "gray" : "none"}
                   viewBox="0 0 24 24"
                   strokeWidth={1.5}
                   stroke="currentColor"
                   className="w-6 h-6 hover:text-red-600"
+                    onClick={() => handleLikeAndDislike({...props,action: "like"})}
                 >
                   <path
                     strokeLinecap="round"
@@ -122,16 +197,17 @@ function IdeaCard(props) {
                     d="M6.633 10.5c.806 0 1.533-.446 2.031-1.08a9.041 9.041 0 012.861-2.4c.723-.384 1.35-.956 1.653-1.715a4.498 4.498 0 00.322-1.672V3a.75.75 0 01.75-.75A2.25 2.25 0 0116.5 4.5c0 1.152-.26 2.243-.723 3.218-.266.558.107 1.282.725 1.282h3.126c1.026 0 1.945.694 2.054 1.715.045.422.068.85.068 1.285a11.95 11.95 0 01-2.649 7.521c-.388.482-.987.729-1.605.729H13.48c-.483 0-.964-.078-1.423-.23l-3.114-1.04a4.501 4.501 0 00-1.423-.23H5.904M14.25 9h2.25M5.904 18.75c.083.205.173.405.27.602.197.4-.078.898-.523.898h-.908c-.889 0-1.713-.518-1.972-1.368a12 12 0 01-.521-3.507c0-1.553.295-3.036.831-4.398C3.387 10.203 4.167 9.75 5 9.75h1.053c.472 0 .745.556.5.96a8.958 8.958 0 00-1.302 4.665c0 1.194.232 2.333.654 3.375z"
                   />
                 </svg>
-                <span className="text-sm">{idea.likes}</span>
+                <span className="text-sm">{likes}</span>
               </div>
               <div className="flex cursor-pointer items-center transition hover:text-slate-600 gap-2">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
+                  fill={disliked ? "gray" : "none"}
                   viewBox="0 0 24 24"
                   strokeWidth={1.5}
                   stroke="currentColor"
                   className="w-6 h-6"
+                    onClick={() => handleLikeAndDislike({...props,action: "dislike"})}
                 >
                   <path
                     strokeLinecap="round"
@@ -140,7 +216,7 @@ function IdeaCard(props) {
                   />
                 </svg>
 
-                <span className="text-sm">{idea.dislikes}</span>
+                <span className="text-sm">{dislikes}</span>
               </div>
               <div className="flex cursor-pointer items-center transition hover:text-slate-600 gap-2">
                 <svg
@@ -159,11 +235,6 @@ function IdeaCard(props) {
                   />
 
                 </svg>
-                <span>
-                    {
-                      bookmarked ? "Bookmarked" : ""
-                    }
-                  </span>
               </div>
             </div>
           </div>
