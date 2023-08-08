@@ -24,7 +24,7 @@ export default async function accountPage() {
   const session = await getServerSession(authOptions);
   console.log("SESSION", session);
   if (!session) {
-    return redirect("/auth/login");
+    return redirect('/auth/login');
   }
 
     const userIdeas = sortArrayByDate(await fetchAllUserIdeas({token: session.token, user_id: session.user_id}));

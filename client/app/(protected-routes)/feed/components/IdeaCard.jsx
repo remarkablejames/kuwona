@@ -52,6 +52,18 @@ async function likeOrDislikeIdea({user_id,idea_post_id,token,action}) {
   })
 }
 
+async function deleteIdeas({ideaId,token,}) {
+    const res = await fetch(`http://127.0.0.1:8002/api/ideas/${ideaId}`, {
+        method: "DELETE",
+        headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+            Accept: "application/json",
+        },
+        });
+    window.location.reload();
+}
+
 function IdeaCard(props) {
   const { idea } = props;
   const [bookmarked, setBookmarked] = useState(idea.bookmarked);
@@ -148,7 +160,17 @@ function IdeaCard(props) {
             <div className="text-xs text-neutral-500">
               {getTimeAgo(idea.created_at)}
             </div>
+              {
+                    idea.user_id == props.user_id && (
+                      <button type="button"
+                              onClick={() => deleteIdeas({...props,ideaId: idea.id})}
+                              className="py-1 px-2 inline-flex justify-center items-center  rounded-md border border-transparent font-semibold bg-red-500 text-white hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 transition-all text-sm dark:focus:ring-offset-gray-800">
+                          Delete
+                      </button>
+                    )
+              }
           </div>
+
         </div>
         <div className="mt-4 mb-6">
           <Link href={`/idea/${idea.id}`}>
