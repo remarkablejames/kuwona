@@ -21,6 +21,7 @@ return new class extends Migration
             $table->string('profile_picture')->nullable();
             $table->rememberToken();
             $table->timestamps();
+            // add a new field that contains  array of liked 
         });
     }
 

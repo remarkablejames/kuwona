@@ -3,7 +3,6 @@ import { useState } from "react";
 import axios from "axios";
 import { redirect } from "next/navigation";
 export default function NewIdeaForm({ token, user_id }) {
-  console.log(token);
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [category, setCategory] = useState("");
@@ -11,7 +10,8 @@ export default function NewIdeaForm({ token, user_id }) {
     e.preventDefault();
 
     console.log(title, description, category);
-
+    // check if user is logged in with token
+     if (!token) { return redirect("/unauthenticated"); }
     axios
       .post(
         "http://127.0.0.1:8002/api/ideas",

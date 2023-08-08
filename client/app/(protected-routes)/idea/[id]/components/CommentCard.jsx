@@ -8,7 +8,7 @@ import { sortArrayByDate } from "@/app/utils";
 function DetailedIdeaCard({ idea, token, user_id }) {
   //sort comments by date, newest first
   idea.comments = sortArrayByDate(idea.comments);
-
+console.log("IDEA", idea);
   const [showCommentBox, setShowCommentBox] = useState(false);
   const [comment, setComment] = useState("");
   function toggleCommentBox() {
@@ -85,10 +85,12 @@ function DetailedIdeaCard({ idea, token, user_id }) {
         <div>
           <div className="flex items-center justify-between text-slate-500">
             <div className="flex space-x-4 md:space-x-8">
-              <div className="flex cursor-pointer items-center transition hover:text-slate-600 gap-2">
+              <div className="group flex relative cursor-pointer items-center transition hover:text-slate-600 gap-2">
                 <div
-                  className="cursor-pointer flex gap-2 items-center justify-between w-full px-4 py-2 text-center text-white duration-200 bg-black border-2 border-black rounded-full nline-flex hover:bg-transparent hover:border-black hover:text-black focus:outline-none lg:w-auto focus-visible:outline-black text-sm focus-visible:ring-black"
-                  onClick={toggleCommentBox}
+                  className={`cursor-pointer flex gap-2 items-center justify-between w-full px-4 py-2 text-center text-white duration-200 ${idea.user.id == user_id? 'bg-gray-400 border-gray-400 cursor-not-allowed':'bg-black border-black hover:bg-transparent hover:border-black hover:text-black focus:outline-none'} border-2  rounded-full inline-flex  lg:w-auto focus-visible:outline-black text-sm focus-visible:ring-black`}
+                  onClick={
+                  idea.user.id !== user_id ? toggleCommentBox : null
+                  }
                 >
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -106,6 +108,12 @@ function DetailedIdeaCard({ idea, token, user_id }) {
                   </svg>
                   <h2>Add comment</h2>
                 </div>
+                {
+                    idea.user.id == user_id ? <span className="group-hover:opacity-100 transition-opacity bg-orange-800 px-1 text-sm text-gray-100 rounded-md absolute left-1/2
+    -translate-x-1/2 translate-y-full opacity-0 m-4 mx-auto">
+                    You can't comment on your own post
+                    </span> : null
+                }
               </div>
               <div className="flex cursor-pointer items-center transition hover:text-slate-600 gap-2">
                 <svg
@@ -192,18 +200,4 @@ function DetailedIdeaCard({ idea, token, user_id }) {
 
 export default DetailedIdeaCard;
 
-function RenderComments({ comments }) {
-  return (
-    <>
-      {comments.map((comment) => (
-        <Comment
-          key={comment.id}
-          timestamp={getTimeAgo(comment.created_at)}
-          avatarUrl="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1180&q=80"
-          username={comment.user.name}
-          content={comment.content}
-        />
-      ))}
-    </>
-  );
-}
+

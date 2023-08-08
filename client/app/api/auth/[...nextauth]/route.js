@@ -24,7 +24,7 @@ export const authOptions = {
         });
 
         const user = await res.json();
-        console.log("IN ROUTE", user.user);
+        // console.log("IN ROUTE", user.user);
 
         if (user) {
           // Any object returned will be saved in `user` property of the JWT
@@ -51,7 +51,7 @@ export const authOptions = {
     async session({ session, token, user }) {
       //   console.log("IN SESSION", session, token, user);
 
-      return { ...session, token: token.accessToken, user_id: token.id };
+      return { ...session, token: token.accessToken, user_id: token.id, created_at: token.created_at };
     },
   },
   pages: {

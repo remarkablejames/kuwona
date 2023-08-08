@@ -8,7 +8,7 @@ function IdeaCard({ idea }) {
           <div className="flex items-center space-x-3">
             <div className="h-8 w-8 rounded-full bg-slate-400 bg-[url('https://i.pravatar.cc/32')]" />
             <div className="text-lg font-normal text-slate-700">
-              {idea.user.name}
+              {"idea.user.name"}
             </div>
           </div>
           <div className="flex items-center space-x-8">
