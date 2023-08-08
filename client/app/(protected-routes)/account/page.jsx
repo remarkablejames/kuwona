@@ -200,7 +200,7 @@ export default async function accountPage() {
                 <div className="absolute h-full border border-dashed border-opacity-20 border-secondary" />
                 {/* start::Timeline item */}
 
-                {
+                {userIdeas.length > 0 ? (
                     userIdeas.map((idea) => (
                         <div className="flex items-center w-full my-6 -ml-1.5">
                             <div className="w-1/12 z-10">
@@ -214,6 +214,14 @@ export default async function accountPage() {
                             </div>
                         </div>
                     ))
+                ) : (
+                    <div className="flex items-center w-full my-6 -ml-1.5">
+
+                      <div className="bg-orange-500 text-sm text-white rounded-md p-4" role="alert">
+                        <span className="font-bold">You have not posted any ideas yet.</span>
+                      </div>
+                    </div>
+                )
 
                 }
 

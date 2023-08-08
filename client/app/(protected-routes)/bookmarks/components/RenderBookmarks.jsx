@@ -29,10 +29,9 @@ async function RenderBookmarks() {
   console.log("BOOKMARK",bookmarks);
   return (
     <>
-      {bookmarks ? (
         <main className=" overflow-y-scroll  ">
           <h2 className="font-bold text-4xl  text-center">Bookmarked ideas</h2>
-
+          {bookmarks.length > 0 ? (
           <>
             {/* Card Section */}
             <div className="max-w-[85rem] px-4 py-10 sm:px-6 lg:px-8 lg:py-14 mx-auto">
@@ -83,8 +82,17 @@ async function RenderBookmarks() {
               {/* End Grid */}
             </div>
             {/* End Card Section */}
-          </>
+          </>)
+                  : (
+                  <div className="flex items-center w-full my-6 -ml-1.5">
 
+                    <div className="bg-orange-500 text-sm text-white rounded-md p-4" role="alert">
+                      <span className="font-bold">
+                        No bookmarked ideas yet!
+                      </span>
+                    </div>
+                  </div>
+            )}
 
           {/*/!* Your content *!/*/}
           {/*{bookmarks.map((bookmark) => (*/}
@@ -92,9 +100,6 @@ async function RenderBookmarks() {
           {/*))}*/}
           <div className=" p-4">{/*    This element is hidden*/}</div>
         </main>
-      ) : (
-        <>No posts found</>
-      )}
     </>
   );
 }
