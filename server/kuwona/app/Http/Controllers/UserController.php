@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\File;
 
 class UserController extends Controller
 {
@@ -53,23 +55,40 @@ class UserController extends Controller
         //
     }
 
-    public function uploadProfilePicture(Request $request)
-    {
-        $request->validate([
-            'profile_picture' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048'
-        ]);
-
-        $user = Auth::user();
-
-        if($request->hasFile('profile_picture'))
-        {
-            $profilePicture = $request->file('profile_picture');
-            $profilePictureName = time().'.'.$profilePicture->getClientOriginalExtension();
-            $profilePicture->storeAs('public/profile_pictures', $profilePictureName);
-            $user->profile_picture = $profilePictureName;
-            $user->save();
-        }
-
-        return response()->json(['message' => 'Profile picture uploaded successfully'], 200);
-    }
+//    public function update_user(Request $request)
+//    {
+//        $validated = $request->validate([
+//            'name' => 'required|string|max:255',
+//            'email' => 'required|email',
+//            'profile_picture' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048'
+//        ]);
+//        if (!$validated) {
+//            return response()->json(['message' => 'Validation failed'], 400);
+//        }
+//
+//        $user=$request->user();
+//
+//        if($request->hasFile('profile_picture')){
+//            if ($user->profile_picture){
+//                $old_image_path = public_path(). '/uploads/profile_pictures/' . $user->profile_picture;
+//                if (File::exists($old_image_path)) {
+//                    File::delete($old_image_path);
+//                }
+//            }
+//            $image_name = 'profile_picture_' . time() . '.' . $request->profile_picture->
+//                extension();
+//            $request->profile_picture->move(public_path('uploads/profile_pictures'), $image_name);
+//        }
+//        else{
+//            $image_name = $user->profile_picture;
+//        }
+//
+//        $user->update([
+//            'name' => $request->name,
+//            'email' => $request->email,
+//            'profile_picture' => $image_name,
+//        ]);
+//
+//        return response()->json(['message' => 'User updated successfully'], 200);
+//    }
 }

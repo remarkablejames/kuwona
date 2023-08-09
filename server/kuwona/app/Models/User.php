@@ -24,6 +24,9 @@ class User extends Authenticatable
         'password',
         'profile_picture',
     ];
+
+//    public $appends = ['user_image_url'];
+
     public function idea(){
         return $this->hasMany(Idea::class);
     }
@@ -62,4 +65,9 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
+
+//    public function getUserImageUrlAttribute()
+//    {
+//        return asset('/uploads/profile_pictures/' . $this->profile_picture);
+//    }
 }

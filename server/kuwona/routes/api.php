@@ -62,6 +62,9 @@ Route::group(["middleware" => "auth:sanctum"], function(){
 
     Route::resource('/bookmarks', BookmarkController::class);
     Route::resource('/users', UserController::class);
+
+    //UPDATE USER PROFILE
+//    Route::post('/users/update-user', [UserController::class, 'update_user']);
 });
 
 
