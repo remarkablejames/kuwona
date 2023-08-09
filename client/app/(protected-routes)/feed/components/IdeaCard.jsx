@@ -3,6 +3,7 @@ import Link from "next/link";
 import { getTimeAgo } from "@/app/utils";
 import {useState} from "react";
 import {redirect} from "next/navigation";
+import Image from "next/image";
 
 async function createBookmark({idea,token,user_id}) {
 
@@ -148,7 +149,9 @@ function IdeaCard(props) {
       <div className="rounded-xl border p-5 hover:shadow-sm  duration-200  w-full bg-white hover:bg-gray-100 hover:border-gray-300 transition">
         <div className="flex w-full items-center justify-between border-b pb-3 ">
           <div className="flex items-center space-x-3">
-            <div className="h-8 w-8 rounded-full bg-slate-400 bg-[url('https://i.pravatar.cc/32')]" />
+            <div>
+                <img className="w-10 h-10 rounded-full" src={idea.user.image} />
+            </div>
             <div className="text-lg font-normal text-slate-700">
               {idea.user.name}
             </div>
@@ -181,6 +184,16 @@ function IdeaCard(props) {
           <div className="text-md text-neutral-600 text-justify">
             {idea.description}
           </div>
+            {
+                idea.image && (
+                    <div className="">
+                        <div className="text-gray-400 font-medium text-sm mb-7 mt-6">
+                            <img className="rounded w-full" src={ idea.image} />
+                        </div>
+                    </div>
+                )
+            }
+
         </div>
         <div>
           <div className="flex items-center justify-between text-slate-500">

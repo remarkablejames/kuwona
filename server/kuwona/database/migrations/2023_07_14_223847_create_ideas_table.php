@@ -18,6 +18,9 @@ return new class extends Migration
             $table->string('slug');
             $table->string('category')-> default('general');
             $table->string('description')->nullable();
+            $table->integer('likes')->default(0);
+            $table->integer('dislikes')->default(0);
+            $table->string('image')->nullable();
             $table->timestamps();
         });
     }

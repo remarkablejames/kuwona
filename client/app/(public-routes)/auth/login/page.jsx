@@ -7,7 +7,7 @@ import { useRouter } from "next/navigation"; // Import the useRouter hook
 function Login() {
   const router = useRouter(); // Use the useRouter hook
 
-  const [email, setEmail] = useState("ethan@gmail.com");
+  const [email, setEmail] = useState("miles@gmail.com");
   const [password, setPassword] = useState("test123");
 
   const loginUser = async (e) => {

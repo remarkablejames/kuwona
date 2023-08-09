@@ -22,7 +22,7 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
-        'profile_picture',
+        'image',
     ];
     public function idea(){
         return $this->hasMany(Idea::class);

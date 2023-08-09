@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Idea;
 use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Support\Facades\Log;
 
 class IdeaController extends Controller
 {
@@ -32,10 +33,30 @@ class IdeaController extends Controller
         $request -> validate([
             'title' => 'required',
             'slug' => 'required',
-            'description' => 'required'
+            'description' => 'required',
+            'category' => 'required',
+            'image' => 'image|mimes:jpeg,png,jpg,gif|max:5000', // Adjust accepted formats and size
         ]);
 
-        $idea = Idea::create($request->all());
+        $imagePath = null; // Initialize $imagePath with a default value
+
+        if ($request->hasFile('image')) {
+            $imagePath = $request->file('image')->store('idea_images', 'public'); // Store in 'public' disk
+            $imagePath = asset('storage/' . $imagePath); // Generate full URL for stored image (ex: http://localhost:8000/storage/idea_images/idea_image.jpg)
+        }
+
+        Log::debug('Image Upload Request:', ['image' => $imagePath]);
+
+
+
+        $idea = Idea::create([
+            'user_id' => $request->user()->id,
+            'title' => $request->title,
+            'slug' => $request->slug,
+            'description' => $request->description,
+            'category' => $request->category,
+            'image' => $imagePath ?? null,
+        ]);
         return response()->json($idea, 201);
     }
 
