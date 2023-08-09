@@ -117,7 +117,9 @@ export default function LayoutShell({ children, user }) {
                   >
                     <img
                       className="inline-block h-[2.375rem] w-[2.375rem] rounded-full"
-                      src="https://images.unsplash.com/photo-1633332755192-727a05c4013d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1180&q=80"
+                      src={
+                        user.image || "https://static.vecteezy.com/system/resources/previews/008/442/086/original/illustration-of-human-icon-user-symbol-icon-modern-design-on-blank-background-free-vector.jpg"
+                      }
                       alt="Image Description"
                     />
                   </button>

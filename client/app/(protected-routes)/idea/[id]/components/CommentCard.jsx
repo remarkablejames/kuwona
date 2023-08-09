@@ -62,7 +62,9 @@ console.log("IDEA", idea);
       <div className="rounded-xl border p-5  shadow-md w-full bg-white">
         <div className="flex w-full items-center justify-between border-b pb-3">
           <div className="flex items-center space-x-3">
-            <div className="h-8 w-8 rounded-full bg-slate-400 bg-[url('https://i.pravatar.cc/32')]" />
+            <div>
+              <img className="w-10 h-10 rounded-full" src={idea.user.image} />
+            </div>
             <div className="text-lg font-normal text-slate-700">
               {idea.user.name}
             </div>
@@ -81,6 +83,15 @@ console.log("IDEA", idea);
           <div className="text-md text-neutral-600 text-justify">
             {idea.description}
           </div>
+          {
+              idea.image && (
+                  <div className="">
+                    <div className="text-gray-400 font-medium text-sm mb-7 mt-6">
+                      <img className="rounded w-full" src={ idea.image} />
+                    </div>
+                  </div>
+              )
+          }
         </div>
         <div>
           <div className="flex items-center justify-between text-slate-500">
@@ -183,7 +194,7 @@ console.log("IDEA", idea);
                     <Comment
                       key={comment.id}
                       timestamp={getTimeAgo(comment.created_at)}
-                      avatarUrl="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1180&q=80"
+                      avatarUrl={comment.user.image}
                       username={comment.user.name}
                       content={comment.content}
                     />

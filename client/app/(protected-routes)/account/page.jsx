@@ -42,8 +42,8 @@ export default async function accountPage() {
           </div>
           <div className="flex flex-col items-center -mt-20">
             <img
-              src="https://images.unsplash.com/photo-1633332755192-727a05c4013d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1180&q=80"
-              className="w-40 border-4 border-white rounded-full"
+              src={session.user.image}
+              className="w-40 h-40 border-4 border-white rounded-full"
             />
             <div className="flex items-center space-x-2 mt-2">
               <p className="text-2xl">{session.user.name}</p>

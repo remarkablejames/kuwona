@@ -22,7 +22,7 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
-        'profile_picture',
+        'image',
     ];
 
 //    public $appends = ['user_image_url'];
