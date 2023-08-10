@@ -1,8 +1,12 @@
 <?php
 
+use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\IdeaController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\BookmarkController;
+use App\Http\Controllers\LikesAndDislikesController;
+use App\Http\Controllers\LikesController;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -18,25 +22,52 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
-});
+//Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
+//    return $request->user();
+//});
 
 Route::get('/ideas', [IdeaController::class, 'index']);
-
-Route::post('/ideas', [IdeaController::class, 'store']);
-
 Route::get('/ideas/{id}', [IdeaController::class, 'show']);
-
-Route::put('/ideas/{id}', [IdeaController::class, 'update']);
-
-Route::delete('/ideas/{id}', [IdeaController::class, 'destroy']);
-
 Route::get('/ideas/search/{title}', [IdeaController::class, 'search']);
+Route::post('register', [AuthController::class, 'register']);
+Route::post('login', [AuthController::class, 'login']);
+// logout
+//authenticating routes
+Route::group(["middleware" => "auth:sanctum"], function(){
 
-Route::resource('users', UserController::class);
+    Route::post('/upload', [UserController::class, 'uploadProfilePicture']);
 
-Route::resource('comment', CommentController::class);
+    Route::post('logout', [AuthController::class, 'logout']);
+    Route::post('/ideas', [IdeaController::class, 'store']);
+    Route::get('/userideas/{id}', [IdeaController::class, 'userIdeas']);
+    Route::post('/ideas/{id}', [IdeaController::class, 'updateIdea']);
+    Route::delete('/ideas/{id}', [IdeaController::class, 'destroy']);
+    Route::resource('comment', CommentController::class);
+    // LIKES IMPLEMENTATION BY OBI
+//    Route::post('/ideas/{ideaId}/like', [LikesAndDislikesController::class, 'likeIdea'])->name('ideas.like');
+//    Route::post('/ideas/{ideaId}/dislike', [LikesAndDislikesController::class, 'dislikeIdea'])->name('ideas.dislike');
+//
+//   //get all likes and dislikes
+//    Route::get('/likes', [LikesAndDislikesController::class, 'index']);
+//
+    // LIKES IMPLEMENTATION
+
+    Route::resource('/likes', LikesController::class);
+
+
+    //get all likes and dislikes for a specific idea
+    Route::get('/likes/{Id}', [LikesAndDislikesController::class, 'show']);
+
+    Route::put('/users/{id}', [UserController::class, 'update']);
+
+    Route::resource('/bookmarks', BookmarkController::class);
+    Route::resource('/users', UserController::class);
+
+    //UPDATE USER PROFILE
+//    Route::post('/users/update-user', [UserController::class, 'update_user']);
+});
+
+
 
 
 

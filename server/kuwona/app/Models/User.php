@@ -8,6 +8,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 
+
 class User extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable;
@@ -21,11 +22,29 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'image',
     ];
+
+//    public $appends = ['user_image_url'];
+
     public function idea(){
         return $this->hasMany(Idea::class);
     }
 
+    public function bookmarks()
+    {
+        return $this->hasMany(Bookmark::class);
+    }
+
+    public function likedIdeas()
+    {
+        return $this->belongsToMany(Idea::class, 'likes', 'user_id', 'idea_id');
+    }
+
+    public function dislikedIdeas()
+    {
+        return $this->belongsToMany(Idea::class, 'dislikes', 'user_id', 'idea_id');
+    }
 
     /**
      * The attributes that should be hidden for serialization.
@@ -46,4 +65,9 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
+
+//    public function getUserImageUrlAttribute()
+//    {
+//        return asset('/uploads/profile_pictures/' . $this->profile_picture);
+//    }
 }

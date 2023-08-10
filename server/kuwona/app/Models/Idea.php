@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Idea extends Model
 {
     use HasFactory;
-    protected $fillable = ['user_id','title','slug','category','description','likes','dislikes'];
+    protected $fillable = ['user_id','title','slug','category','description','likes','dislikes,','image'];
 
     public function user(){
         return $this->belongsTo(User::class);
@@ -17,4 +17,10 @@ class Idea extends Model
     public function comments(){
         return $this->hasMany(Comment::class);
     }
+
+    public function bookmarks()
+    {
+        return $this->hasMany(Bookmark::class);
+    }
+
 }
