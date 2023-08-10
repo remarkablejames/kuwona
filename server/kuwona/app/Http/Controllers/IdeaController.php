@@ -35,8 +35,14 @@ class IdeaController extends Controller
             'slug' => 'required',
             'description' => 'required',
             'category' => 'required',
-            'image' => 'image|mimes:jpeg,png,jpg,gif|max:5000', // Adjust accepted formats and size
         ]);
+
+        // if image is uploaded, validate it
+        if ($request->hasFile('image')) {
+            $request->validate([
+                'image' => 'mimes:jpeg,jpg,png,gif|required|max:10000'
+            ]);
+        }
 
         $imagePath = null; // Initialize $imagePath with a default value
 

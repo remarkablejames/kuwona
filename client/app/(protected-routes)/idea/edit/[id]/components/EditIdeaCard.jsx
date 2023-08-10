@@ -51,8 +51,8 @@ function EditIdeaCard({ idea, token, user_id }) {
               console.log(error);
           });
 
-    // refresh the page
-    // window.location.reload();
+    // redirect to home page
+    window.location.href = "/feed";
   }
   return (
     <div className="mx-auto max-w-4xl pt-2 sm:px-6 lg:px-8 flex items-center justify-center">
