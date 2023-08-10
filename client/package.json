@@ -8,6 +8,7 @@
     "start": "next start",
     "lint": "next lint"
   },
+  "proxy": "http://localhost:8002",
   "dependencies": {
     "autoprefixer": "10.4.14",
     "axios": "^1.4.0",
