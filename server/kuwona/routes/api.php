@@ -40,7 +40,7 @@ Route::group(["middleware" => "auth:sanctum"], function(){
     Route::post('logout', [AuthController::class, 'logout']);
     Route::post('/ideas', [IdeaController::class, 'store']);
     Route::get('/userideas/{id}', [IdeaController::class, 'userIdeas']);
-    Route::put('/ideas/{id}', [IdeaController::class, 'update']);
+    Route::post('/ideas/{id}', [IdeaController::class, 'updateIdea']);
     Route::delete('/ideas/{id}', [IdeaController::class, 'destroy']);
     Route::resource('comment', CommentController::class);
     // LIKES IMPLEMENTATION BY OBI

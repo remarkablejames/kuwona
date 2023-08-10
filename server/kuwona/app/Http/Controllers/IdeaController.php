@@ -60,16 +60,26 @@ class IdeaController extends Controller
         return response()->json($idea, 201);
     }
 
-    // update an existing idea
-    public function update($id): JsonResponse
+    public function updateIdea(Request $request, string $id): JsonResponse
     {
         $idea = Idea::find($id);
-        $idea->title = request('title');
-        $idea->slug = request('slug');
-        $idea->description = request('description');
-        $idea->save();
+        $imagePath = $idea->image; // Keep the existing image path if no new image is uploaded
+        if ($request->hasFile('image')) {
+            $imagePath = $request->file('image')->store('idea_images', 'public');
+            $imagePath = asset('storage/' . $imagePath);
+        }
 
-        return response()->json($idea, 200);
+        Log::debug('Image Upload Request:', ['image' => $imagePath]);
+
+        $idea->update([
+            'title' => $request->title,
+            'slug' => $request->slug,
+            'description' => $request->description,
+            'category' => $request->category,
+            'image' => $imagePath,
+        ]);
+
+        return response()->json($idea, 201);
     }
 
     // delete an existing idea
