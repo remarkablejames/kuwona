@@ -24,18 +24,18 @@ export const authOptions = {
         });
 
         const user = await res.json();
-        // console.log("IN ROUTE", user.user);
 
-        if (user) {
+        if (user.user) {
           // Any object returned will be saved in `user` property of the JWT
-          // console.log('user:', user);
+
           return { ...user.user, accessToken: user.token };
         } else {
-          console.log("INSPECTING ERRORS");
           // If you return null then an error will be displayed advising the user to check their details.
-          return null;
+          // return null;
 
-          // You can also Reject this callback with an Error thus the user will be sent to the error page with the error message as a query parameter
+          //  Reject this callback with an Error thus the user will be sent to the error page with the error message as a query parameter
+
+             throw new Error(user.message) // Redirect to error page
         }
       },
     }),

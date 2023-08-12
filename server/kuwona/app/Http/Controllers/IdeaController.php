@@ -107,7 +107,8 @@ class IdeaController extends Controller
     // search for an idea
     public function search($title): JsonResponse
     {
-        return response()->json(Idea::where('title', 'like', '%'.$title.'%')->get(), 200);
+        // return idea with associated user
+        return response()->json(Idea::with('user')->where('title', 'like', '%' . $title . '%')->get(), 200);
     }
 
 }

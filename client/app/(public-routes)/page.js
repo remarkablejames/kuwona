@@ -1,12 +1,18 @@
+'use client';
 import Image from "next/image";
-import { getServerSession } from "next-auth/next";
-import { authOptions } from "../api/auth/[...nextauth]/route";
+import Link from "next/link";
+import redirect from 'next/navigation'
 export default async function HomePage() {
-  const session = await getServerSession(authOptions);
-  console.log("ON PAGE", session);
+  // redirect after 3 seconds
+    setTimeout(() => {
+      window.location.href = "/feed";
+    }, 3000)
+
+
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-24">
-      <h1 className="text-6xl font-bold text-center">hello world</h1>
+    <main className=" min-h-screen  p-24">
+      <div  class="font-extrabold text-transparent text-8xl bg-clip-text bg-gradient-to-r from-blue-500 to-red-600">Welcome to Kuwona Idea board!</div>
+      <p> you will be redirected shortly...</p>
     </main>
   );
 }

@@ -8,8 +8,9 @@ import Link from "next/link"; // Import the useRouter hook
 function Login() {
   const router = useRouter(); // Use the useRouter hook
 
-  const [email, setEmail] = useState("miles@gmail.com");
-  const [password, setPassword] = useState("test123");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
 
   const loginUser = async (e) => {
     e.preventDefault();
@@ -19,9 +20,12 @@ function Login() {
       redirect: false,
     });
 
+    // console.log("RESULT", result);
+
     if (result.error) {
       // Handle login error
-      console.error("Login failed:", result.error);
+      // console.error("Login failed:", result.error);
+        setError(result.error);
       return;
     }
 
@@ -52,10 +56,14 @@ function Login() {
                 </Link>
               </p>
             </div>
+            <p className=" text-xs text-center text-red-600 mt-2" id="email-error">
+                {error}
+            </p>
             <div className="mt-5">
 
               {/* Form */}
               <form onSubmit={loginUser}>
+
                 <div className="grid gap-y-4">
                   {/* Form Group */}
                   <div>
@@ -73,25 +81,30 @@ function Login() {
                           className="py-3 px-4 block w-full border rounded-md text-sm focus:border-blue-500 focus:ring-blue-500 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400"
                           required=""
                           aria-describedby="email-error"
+                          placeholder={"Enter your email"}
                           value={email}
-                          onChange={(e) => setEmail(e.target.value)}
+                          onChange={(e) => {
+                            setEmail(e.target.value);
+                            setError("");
+                          }}
                       />
-                      <div className=" absolute inset-y-0 right-0 flex items-center pointer-events-none pr-3">
-                        <svg
-                            className="h-5 w-5 text-red-500"
-                            width={16}
-                            height={16}
-                            fill="currentColor"
-                            viewBox="0 0 16 16"
-                            aria-hidden="true"
-                        >
-                          <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8 4a.905.905 0 0 0-.9.995l.35 3.507a.552.552 0 0 0 1.1 0l.35-3.507A.905.905 0 0 0 8 4zm.002 6a1 1 0 1 0 0 2 1 1 0 0 0 0-2z" />
-                        </svg>
-                      </div>
+                      {error && (
+                          <div className=" absolute inset-y-0 right-0 flex items-center pointer-events-none pr-3">
+                            <svg
+                                className="h-5 w-5 text-red-500"
+                                width={16}
+                                height={16}
+                                fill="currentColor"
+                                viewBox="0 0 16 16"
+                                aria-hidden="true"
+                            >
+                              <path
+                                  d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8 4a.905.905 0 0 0-.9.995l.35 3.507a.552.552 0 0 0 1.1 0l.35-3.507A.905.905 0 0 0 8 4zm.002 6a1 1 0 1 0 0 2 1 1 0 0 0 0-2z"/>
+                            </svg>
+                          </div>
+                      )}
                     </div>
-                    <p className=" text-xs text-red-600 mt-2" id="email-error">
-                      Please include a valid email address
-                    </p>
+
                   </div>
                   {/* End Form Group */}
                   {/* Form Group */}
@@ -118,28 +131,30 @@ function Login() {
                           className="py-3 px-4 block w-full border rounded-md text-sm focus:border-blue-500 focus:ring-blue-500 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400"
                           required=""
                           aria-describedby="password-error"
+                            placeholder={"Enter your password"}
                           value={password}
-                          onChange={(e) => setPassword(e.target.value)}
+                            onChange={(e) => {
+                                setPassword(e.target.value);
+                                setError("");
+                            }}
                       />
-                      <div className=" absolute inset-y-0 right-0 flex items-center pointer-events-none pr-3">
-                        <svg
-                            className="h-5 w-5 text-red-500"
-                            width={16}
-                            height={16}
-                            fill="currentColor"
-                            viewBox="0 0 16 16"
-                            aria-hidden="true"
-                        >
-                          <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8 4a.905.905 0 0 0-.9.995l.35 3.507a.552.552 0 0 0 1.1 0l.35-3.507A.905.905 0 0 0 8 4zm.002 6a1 1 0 1 0 0 2 1 1 0 0 0 0-2z" />
-                        </svg>
-                      </div>
+                      {
+                            error && (
+                              <div className=" absolute inset-y-0 right-0 flex items-center pointer-events-none pr-3">
+                                <svg
+                                    className="h-5 w-5 text-red-500"
+                                    width={16}
+                                    height={16}
+                                    fill="currentColor"
+                                    viewBox="0 0 16 16"
+                                    aria-hidden="true"
+                                >
+                                  <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8 4a.905.905 0 0 0-.9.995l.35 3.507a.552.552 0 0 0 1.1 0l.35-3.507A.905.905 0 0 0 8 4zm.002 6a1 1 0 1 0 0 2 1 1 0 0 0 0-2z" />
+                                </svg>
+                              </div>
+                            )
+                      }
                     </div>
-                    <p
-                        className=" text-xs text-red-600 mt-2"
-                        id="password-error"
-                    >
-                      8+ characters required
-                    </p>
                   </div>
                   {/* End Form Group */}
                   {/* Checkbox */}

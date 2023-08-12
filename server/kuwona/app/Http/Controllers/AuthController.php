@@ -15,12 +15,15 @@ class AuthController extends Controller
             'name' => 'required|string',
             'email'=> 'required|string|unique:users,email',
             'password' => 'required|string|confirmed',
-            'image' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048'
+
 
         ]);
-        $imagePath = null; // Initialize $imagePath with a default value
+        $imagePath = "https://media.istockphoto.com/id/1300845620/vector/user-icon-flat-isolated-on-white-background-user-symbol-vector-illustration.jpg?s=170667a&w=0&k=20&c=bsbD0qLFJ6fSUCXG_iyo7JBnmKi6T-uUblC8FNZFJoU="; // Initialize $imagePath with a default value
 
         if ($request->hasFile('image')) {
+            $request->validate([
+                'image' => 'mimes:jpeg,jpg,png,gif|required|max:2048'
+            ]);
             $imagePath = $request->file('image')->store('user_images', 'public'); // Store in 'public' disk
             $imagePath = asset('storage/' . $imagePath); // Generate full URL for stored image (ex: http://localhost:8000/storage/idea_images/idea_image.jpg)
         }
@@ -28,7 +31,7 @@ class AuthController extends Controller
             'name' => $request->name,
             'email'=> $request->email,
             'password' => bcrypt($request->password),
-            'image' => $imagePath ?? null,
+            'image' => $imagePath,
         ]);
         $user->save();
         $token = $user->createToken('api-token')->plainTextToken;
